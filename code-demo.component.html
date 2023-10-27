@@ -1,0 +1,27 @@
+<nz-spin *ngIf="applicationLoading$ | async; else content"> </nz-spin>
+<ng-template #content>
+  <div class="flex flex-col justify-between h-full">
+    <child-comp-1
+      *ngIf="currentStepIdx === 0"
+      class="overflow-y-auto"
+      [details]="details$ | async"
+      [genericDetails]="genericDetails$ | async"
+    >
+    </child-comp-1>
+    <child-comp-2
+      *ngIf="currentStepIdx === 1"
+      class="overflow-y-auto"
+      (goToDetails)="handleStepChange(0)"
+    ></child-comp-2>
+    <child-comp-3
+      [currentStepIdx]="currentStepIdx"
+      [data]="data$ | async"
+      [steps]="steps"
+      [method]="method$ | async"
+      [isLoading]="isPricingLoading$ | async"
+      [total]="total$ | async"
+      (onStepChange)="handleStepChange($event)"
+      (onProceedToPayment)="handleProceedToPayment($event)"
+    ></child-comp-3>
+  </div>
+</ng-template>
